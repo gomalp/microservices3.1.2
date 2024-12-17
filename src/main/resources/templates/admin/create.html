@@ -1,0 +1,82 @@
+<!-- В верхней части файла -->
+<div th:if="${#debug}" th:text="${#maps.mapToString(#fields)}"></div>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Создать Пользователя</title>
+
+    <style>
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+<h1>Создать Пользователя</h1>
+<form th:action="@{/admin/create}" th:object="${user}" method="post">
+    <!-- CSRF Token -->
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+    <!-- Имя пользователя -->
+    <div>
+        <label>Имя пользователя:</label>
+        <input type="text" th:field="*{userName}" required />
+        <div th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="error"></div>
+    </div>
+
+    <!-- Пароль -->
+    <div>
+        <label>Пароль:</label>
+        <input type="password" th:field="*{password}" required />
+        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
+    </div>
+
+    <!-- Имя -->
+    <div>
+        <label>Имя:</label>
+        <input type="text" th:field="*{firstName}" required />
+        <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error"></div>
+    </div>
+
+    <!-- Фамилия -->
+    <div>
+        <label>Фамилия:</label>
+        <input type="text" th:field="*{lastName}" required />
+        <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error"></div>
+    </div>
+
+    <!-- День рождения -->
+    <div>
+        <label>День рождения:</label>
+        <input type="date" th:field="*{birthDay}" />
+        <div th:if="${#fields.hasErrors('birthDay')}" th:errors="*{birthDay}" class="error"></div>
+    </div>
+
+    <!-- Адрес -->
+    <div>
+        <label>Адрес:</label>
+        <input type="text" th:field="*{homeAdress}" />
+        <div th:if="${#fields.hasErrors('homeAdress')}" th:errors="*{homeAdress}" class="error"></div>
+    </div>
+
+    <!-- Роли -->
+    <div>
+        <label>Роли:</label>
+        <select multiple="multiple" name="roles">
+            <option th:each="role : ${allRoles}"
+                    th:value="${role.id}"
+                    th:text="${role.role}"></option>
+        </select>
+        <div th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}" class="error"></div>
+    </div>
+
+    <!-- Кнопка отправки -->
+    <div>
+        <button type="submit">Создать</button>
+    </div>
+</form>
+</body>
+</html>
+
